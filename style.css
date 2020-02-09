@@ -1,0 +1,242 @@
+/*Общие для всех страниц стили */
+	
+body { 
+	/*Стили для body на всех страницах*/
+	background-color: #96C0E6; /*Делает фон голубым*/
+	margin: 0; /*Убирает отступы по краям, нужно для того, чтобы header нормально отображался*/
+}
+
+/*Верхняя менюшка*/
+
+header {
+	/*Та синяя строчка вверху всех страниц, кроме choice.php, login.php, signup.php*/
+	width: 100%; /*Делает ту строчку по ширине всей страницы*/
+	height: 3em; /*Задает ей ширину*/
+	background-color: #2B3990; /*Красит ее в темно-синий*/
+	line-height: 3em; /*Делает ссылки из списка отцентрованными по вертикали, хз как, но это так*/
+}
+
+ul.nav {
+	/*Задает стиль для ссылок в менюшке, заставляя их принять горизонтальное положении. Они все - список*/
+ 	list-style: none; /*убираем маркеры списка*/
+ 	margin: 0; /*убираем верхнее и нижнее поле, равное 1em*/
+ 	padding: 0; /*убираем левый отступ, равный 40px*/
+}
+
+li.nav {
+	/*Стили для пунктов списка в навигации*/
+	display: inline-block; /*Делает их горизонтально расположенными*/
+}
+
+a.nav {
+	/*Стили непосредственно для ссылок в этой навигации, кроме активной*/
+	font-family: "Trebuchet MS"; /*Шрифт*/
+	font-size: 20px; /*Размер шрифта*/
+	color: #96C0E6; /*Делает текст голубым*/
+	text-decoration: none; /*Убирает подчеркивание ссылок*/
+	margin-left: 10px; /*Делает отступы между ссылками по горизонтали*/
+}
+
+a.active {
+	/*Стили для активной ссылки*/
+	color: white;
+	font-family: "Trebuchet MS";
+	font-size: 20px;
+	text-decoration: none;
+	margin-left: 10px;
+}
+
+ul.account {
+	float: right;
+	list-style: none;
+}
+
+button.account {
+	float: right;
+	margin-right: 5px;
+	width: 3em;
+	height: 3em;
+	padding: 0;
+}
+
+img.acc {
+	width: 3em;
+	height: 3em;
+}
+
+ul.submenuacc {
+	display: none;
+}
+
+li.acc:hover ul.submenuacc {
+	/*Стили, заставляющие показываться менюшку при наведении на ту кнопку*/
+	display: block;
+}
+
+/*Правая нижняя выпадающая менюшка (та, которая выглядит как плюс)*/
+
+ul.submenu {
+	/*Прячем пункты меню*/
+	display: none;
+}
+
+ul.addul {
+	list-style:none;
+	position: absolute; 
+	bottom: 0;
+	right:0;
+}
+
+a.add {
+	/*Стили для ссылок на страницы создания чего-либо*/
+	color: white;
+	float: right;
+	margin-top: 0;
+	margin-right: 4px;
+	margin-bottom: 4px;
+	padding: 3px;
+	background-color: #2B3990;
+	border-radius: 8px;
+	font-family: "Trebuchet MS";
+	font-size: 20px;
+}
+
+p.addtext {
+	/*Стили для текста "Добавить"*/
+	margin: 0;
+	margin-right: 4px;
+	padding: 3px;
+	font-family: "Trebuchet MS";
+	font-size: 20px;
+	color: #2B3990;
+	background-color: white;
+	border-radius: 8px;
+}
+
+button.addbutton {
+	/*Стили для кнопки, на которую надо навести, чтобы менюшка выпала*/
+	width: 4em;
+	height: 4em;
+	padding: 0;
+	margin-right: 4px;
+	margin-bottom: 5px;
+	float: right;
+}
+
+img {
+	/*Стили для картинки, являющейся кнопкой*/
+	width: 4em;
+	height: 4em;
+}
+
+li.addli:hover ul.submenu {
+	/*Стили, заставляющие показываться менюшку при наведении на ту кнопку*/
+	display: block;
+}
+
+/*Стили для страницы выбора (choice.php)*/
+
+div.choice {
+	/*Делает кнопки по центру страницы*/
+	position: absolute;
+  	top: 50%;
+  	left: 50%;
+  	transform: translate(-50%, -50%);
+}
+
+button.choice {
+	/*Стили для кнопок на этой странице*/
+	display: block;
+	color: #2B3990;
+	background-color: white;
+	border-color: #2B3990;
+	border-radius: 12px;
+	padding: 4px;
+	font-size: 30px;
+	width: 250px;
+}
+
+a.choice {
+	/*Убирает подчеркивание у ссылок*/
+	text-decoration: none;
+}
+
+/*Конец стилей для страницы выбора*/
+
+/*Стили для страницы входа (login.php)*/
+
+form.login {
+	/*центрирует форму регистрации*/
+	position: absolute;
+  	top: 50%;
+  	left: 50%;
+  	transform: translate(-50%, -50%);
+}
+
+input.logpass {
+	/*Стили для полей формы*/
+	margin: 7px;
+	font-size: 30px;
+	font-family: "Trebuchet MS";
+	color: #2B3990;
+	border-color: #2B3990;
+	border-radius: 8px;
+	padding: 4px;
+}
+
+input.logpassin {
+	/*Стили для кнопки, отправляющей данные*/
+	color: #2B3990;
+	background-color: white;
+	font-size: 30px;
+	font-family: "Trebuchet MS";
+	border-color: #2B3990;
+	border-radius: 8px;
+	padding: 2px;
+	width: 150px;
+	position: absolute;
+	left: 50%;
+  	transform: translate(-50%);
+}
+
+/*Конец стилей для страницы входа*/
+
+/*Стили для страницы регистрации (signup.php)*/
+
+form.signup {
+	/*Центрирует форму регистрации*/
+	position: absolute;
+  	top: 50%;
+  	left: 50%;
+  	transform: translate(-50%, -50%);
+}
+
+input.sipass {
+	/*Стили для полей формы*/
+	margin: 7px;
+	font-size: 30px;
+	font-family: "Trebuchet MS";
+	color: #2B3990;
+	border-color: #2B3990;
+	border-radius: 8px;
+	padding: 4px;
+	display: block;
+	width: 350px;
+}
+
+input.sipassin {
+	/*Стили для кнопки, отправляющей данные*/
+	color: #2B3990;
+	background-color: white;
+	font-size: 30px;
+	font-family: "Trebuchet MS";
+	border-color: #2B3990;
+	border-radius: 8px;
+	padding: 2px;
+	width: 230px;
+	position: absolute;
+	left: 50%;
+  	transform: translate(-50%);
+}
+
+/*Конец стилей для страницы регистрации*/
