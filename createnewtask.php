@@ -1,45 +1,92 @@
 <?php
-	require "db.php";
-	require "functions/header.php";
-	$name = 'Новая задача';
-	head($name);
-?>
+	//Открытие сессии и проверка на то, что человек уже авторизован
+	session_start();
+	if (! isset($_SESSION["login"])) {
+		//Если сессия закончилась, то редиректнуть пользователя на страницу авторизации
+		$url = 'choice.php';
+		header("Location: " . $url);
+	}
 
+	//Подключаем необходимые файлы
+	require "db.php"; //Подключение к БД и библиотеке rb
+	require "functions/foreverypage.php"; //Функции с кодом html, который используется на всех страницах
 
-		<header>
-			<nav>
-				<ul class="nav">
-					<li class="nav"><a href="/" class="active">Главная</a></li>
-					<li class="nav"><a href="/goals.php" class="nav">Цели</a></li>
-					<li class="nav"><a href="/tasks.php" class="nav">Задачи</a></li>
-					<li class="nav"><a href="/notes.php" class="nav">Заметки</a></li>
-					<li class="nav"><a href="/trackers.php" class="nav">Трекеры</a></li>
-					<li class="nav"><a href="/categories.php" class="nav">Категории</a></li>
-					<ul class="account">
-						<li class="acc">
-							<button class="account"><img src="img/acc.jpg" class="acc"></button>
-							<ul class="submenuacc">
-								<li class="account"><a href="#">Настройки</a></li>
-								<li class="account"><a href="#">Помощь</a></li>
-								<li class="account"><a href="exit.php">Выход</a></li>
-							</ul>
-						</li>
-					
-					</ul>
-				</ul>
-				
-			</nav>
-		</header>
+	//Обработчик формы
+	$data = $_POST;
+	if (isset($data['dologin']))  {
 
+		$errors = array(); //В данном массиве будут хранится ошибки, связанные с неверно введенными (или вообще не введенными) данными
+
+		// !!! Здесь должна быть проверка на наличие ошибок !!!
+
+		//Если ошибок не обнаружено, то передаем данные в бд
+		if (isset($errors)) {
+
+			//Преобразование данных, полученных из чекбокса формы, связанного с приоритетом, в строку необходимого формата
+			if (isset($data['priority'])) {
+				foreach ($data['priority'] as $value) {
+					if ($data['priority'] == 1) {
+						$priority[0] = 1;
+					} else {
+						$priority[0] = 0;
+					}
+					if ($data['priority'] == 2) {
+						$priority[1] = 1;
+					} else {
+						$priority[1] = 0;
+					}
+				}
+				$priority = implode('|', $priority); //На выходе могут быть следующие значения: 0|0, 0|1, 1|0, 1|1
+			}
+
+			//Заполняем строку таблицы
+			$task = R::dispense('tasks');
+			$task->login = $_SESSION['login']; //Логин пользователя
+
+			$task->name = $data['name']; //Наименование задачи. Обязательное поле для заполнения
+
+			if (isset($data['description'])) {
+				$task->description = $data['description']; //Описание задачи. Необязательное поле
+			}
+
+			$task->created = getdate(); //Дата и время создания задачи. Заполняется автоматически и изменению не подлежит
+
+			if (isset($data['start'])) {
+				$task->start = $data['start']; //Дата и время начала задачи. Необязательное поле
+			}
+
+			if (isset($data['finish'])) {
+				$task->finish = $data['finish']; //Дата и время окончания задачи. Необязательное поле
+			}
+
+			if (isset($priority)) {
+				$task->priority = $priority; //Приоритет задачи. Необязательное поле
+			}
+
+			//if (isset($data['rerun'])) {
+			//	$task->rerun = $data['rerun']; //Повтор задачи. Необязательное поле
+			//}
+
+			//Здесь должны быть категории и комментрарии
+		}
+	}
+
+	head('Новая задача'); //Верхняяя часть html. В качестве аргумента передается имя страницы
+	print <<<FORM
 		<form method="POST">
 			<input type="text" name="name" placeholder="Наименование задачи"><br>
 			<textarea name="description" placeholder="Описание задачи"></textarea><br>
-			<input type="datetime" name="start" placeholder="Дата и время начала"><br>
-			<input type="datetime" name="finish" placeholder="дата и время завершения"><br>
+			<input type="date" name="startd">
+			<input type="time" name="startt"><br>
+			<input type="date" name="finishd">
+			<input type="time" name="finisht"><br>
 			<p>
 				<input type="checkbox" name="priority" value="1">Срочно<br>
 				<input type="checkbox" name="priority" value="2">Важно<br>
 			</p>
+			<!-- Закомменчено в связи с ооочень размытой реализацией. Сначала необходимо продумать,
+				как реализовать повторы, а также набросать категории и комментарии. Пока что их нет,
+				но скоро будут
 			<p>
 				<input type="radio" name="rerun" value="0">no<br>
 				<input type="radio" name="rerun" value="1">1<br>
@@ -48,22 +95,10 @@
 				<input type="radio" name="rerun" value="4">4<br>
 			</p>
 			<input type="datetime" name="remind" placeholder="Напомнить"><br>
-			<input type="text" name="name" placeholder="Наименование задачи"><br>
-			<input type="text" name="name" placeholder="Наименование задачи"><br>
+			<input type="text" name="categories" placeholder="Категории"><br>
+			<input type="text" name="comments" placeholder="Комментарии"><br> -->
 		</form>
-		
-		<ul class="addul">
-			<li class="addli">
-				<ul class="submenu">
-					<li><p class="addtext">Добавить...</p></li>
-					<li><p><a href="#" class="add">категорию</a></p></li>
-					<li><p><a href="#" class="add">трекер</a></p></li>
-					<li><p><a href="#" class="add">заметку</a></p></li>
-					<li><p><a href="#" class="add">цель</a></p></li>
-					<li><p><a href="createnewtask.php" class="add">задачу</a></p></li>
-				</ul>
-				<button class="addbutton"><img src="img/plus.png"></button>
-			</li>
-		</ul>
-	</body>
-</html>
+	FORM;
+	add();
+	foot();
+?>

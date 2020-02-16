@@ -1,6 +1,11 @@
 <?php
+	session_start();
 	require "db.php";
-	require "functions/header.php";
+	require "functions/foreverypage.php";
+	if (isset($_SESSION["login"])) {
+		$url = 'main.php';
+		header("Location: " . $url);
+	}
 	$name = 'Авторизация';
 	head($name);
 ?>
