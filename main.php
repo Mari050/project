@@ -69,6 +69,9 @@
 		<?php 
 		$login = $_SESSION['login'];
 		$tasks = R::find('tasks', 'login LIKE ?', array($login)); # Получаем данные от БД
+		if (! isset($tasks)) {
+			print "<td colspan=\"5\">
+		}
 		foreach ($tasks as $c => $value) { # Выводим полученные данные в виде таблицы
 			if ($value->ready != '1') { # Выводим только те задачи, которые не отмечены, как сделанные
 				print "<tr>
