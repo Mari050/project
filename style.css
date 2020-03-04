@@ -240,3 +240,24 @@ input.sipassin {
 }
 
 /*Конец стилей для страницы регистрации*/
+
+/*Стили для таблицы с задачами*/
+
+table.tasks {
+	font-family: "Trebuchet MS";
+	color: #2B3990;
+	position: absolute;
+	left: 50%;
+	transform: translate(-50%);
+	background-color: #FFFFFF;
+	border: 1px solid #2B3990;
+	border-radius: 8px;
+}
+
+th.tasks {
+	border-bottom: 1px solid #2B3990;
+	border-radius: 4px;
+	color: #FFFFFF;
+	background-color: #2B3990;
+	margin: 0;
+}

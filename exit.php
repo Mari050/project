@@ -2,6 +2,7 @@
     session_start();
     session_unset();
     session_destroy();
-    header("Location: choice.php");// /admin/ - это ссылка на страницу, которая откроется после выхода
+    $url = '/project/choice.php';
+	header("Location: " . $url); // это ссылка на страницу, которая откроется после выхода
     exit;
 ?>

@@ -30,7 +30,7 @@
 			}
 
 			if (empty($errors)) {
-				$user = R::dispense('users');
+				$user = R::dispense('strangers');
 				$user->login = $data["login"];
 				$user->email = $data["email"];
 				$user->password = password_hash($data["password"], PASSWORD_DEFAULT);
