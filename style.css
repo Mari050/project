@@ -4,6 +4,7 @@ body {
 	/*Стили для body на всех страницах*/
 	background-color: #96C0E6; /*Делает фон голубым*/
 	margin: 0; /*Убирает отступы по краям, нужно для того, чтобы header нормально отображался*/
+	font-family: "Trebuchet MS";
 }
 
 /*Верхняя менюшка*/
@@ -14,6 +15,11 @@ header {
 	height: 3em; /*Задает ей ширину*/
 	background-color: #2B3990; /*Красит ее в темно-синий*/
 	line-height: 3em; /*Делает ссылки из списка отцентрованными по вертикали, хз как, но это так*/
+	box-shadow: 0 0 15px rgba(43,57,144,1);
+}
+
+table {
+	table-layout: fixed;
 }
 
 ul.nav {
@@ -30,8 +36,7 @@ li.nav {
 
 a.nav {
 	/*Стили непосредственно для ссылок в этой навигации, кроме активной*/
-	font-family: "Trebuchet MS"; /*Шрифт*/
-	font-size: 20px; /*Размер шрифта*/
+	font-size: 25px; /*Размер шрифта*/
 	color: #96C0E6; /*Делает текст голубым*/
 	text-decoration: none; /*Убирает подчеркивание ссылок*/
 	margin-left: 10px; /*Делает отступы между ссылками по горизонтали*/
@@ -40,8 +45,7 @@ a.nav {
 a.active {
 	/*Стили для активной ссылки*/
 	color: white;
-	font-family: "Trebuchet MS";
-	font-size: 20px;
+	font-size: 25px;
 	text-decoration: none;
 	margin-left: 10px;
 }
@@ -49,6 +53,8 @@ a.active {
 ul.account {
 	float: right;
 	list-style: none;
+	position: relative;
+	z-index: 1;
 }
 
 button.account {
@@ -57,20 +63,35 @@ button.account {
 	width: 3em;
 	height: 3em;
 	padding: 0;
-}
-
-img.acc {
-	width: 3em;
-	height: 3em;
+	border-radius: 50%;
+	margin: 2px;
 }
 
 ul.submenuacc {
 	display: none;
+	list-style: none;
 }
 
 li.acc:hover ul.submenuacc {
 	/*Стили, заставляющие показываться менюшку при наведении на ту кнопку*/
 	display: block;
+}
+
+li.account {
+	margin-top: 0;
+	margin-right: 4px;
+	margin-bottom: 2px;
+}
+
+a.account {
+	background-color: #FFFFFF;
+	padding: 5px;
+
+	border-radius: 16px;
+	border-color: #2B3990;
+	text-decoration: none;
+	color: #2B3990;
+	box-shadow: 0 0 15px rgba(43,57,144,1);
 }
 
 /*Правая нижняя выпадающая менюшка (та, которая выглядит как плюс)*/
@@ -87,46 +108,56 @@ ul.addul {
 	right:0;
 }
 
+li.addli {
+	list-style-type: none;
+	text-align: right;
+	margin-bottom: 0;
+}
+
 a.add {
 	/*Стили для ссылок на страницы создания чего-либо*/
 	color: white;
-	float: right;
 	margin-top: 0;
 	margin-right: 4px;
-	margin-bottom: 4px;
-	padding: 3px;
 	background-color: #2B3990;
-	border-radius: 8px;
-	font-family: "Trebuchet MS";
+	border-radius: 16px;
 	font-size: 20px;
+	text-decoration: none;
+	padding: 5px;
+	padding-left: 8px;
+	padding-right: 8px;
+	box-shadow: 0 0 10px rgba(43,57,144,1);
 }
 
 p.addtext {
 	/*Стили для текста "Добавить"*/
 	margin: 0;
 	margin-right: 4px;
-	padding: 3px;
-	font-family: "Trebuchet MS";
 	font-size: 20px;
 	color: #2B3990;
 	background-color: white;
-	border-radius: 8px;
+	border-radius: 16px;
+	padding: 5px;
+	padding-left: 8px;
+	padding-right: 8px;
+	box-shadow: 0 0 10px rgba(255,255,255,1);
 }
 
 button.addbutton {
 	/*Стили для кнопки, на которую надо навести, чтобы менюшка выпала*/
-	width: 4em;
-	height: 4em;
+	width: 50px;
+	height: 50px;
 	padding: 0;
+	margin-top: 0;
 	margin-right: 4px;
 	margin-bottom: 5px;
 	float: right;
-}
-
-img {
-	/*Стили для картинки, являющейся кнопкой*/
-	width: 4em;
-	height: 4em;
+	border-radius: 50%;
+	border-color: #FFFFFF;
+	background-color: #2B3990;
+	color: #FFFFFF;
+	font-size: 40px;
+	text-align: center;	
 }
 
 li.addli:hover ul.submenu {
@@ -134,7 +165,12 @@ li.addli:hover ul.submenu {
 	display: block;
 }
 
-/*Стили для страницы выбора (choice.php)*/
+li.addli:hover button.addbutton {
+	/*Стили, заставляющие показываться менюшку при наведении на ту кнопку*/
+	color: #96C0E6;
+}
+
+/*Стили для страницы выбора (index.php)*/
 
 div.choice {
 	/*Делает кнопки по центру страницы*/
@@ -145,7 +181,6 @@ div.choice {
 }
 
 button.choice {
-	/*Стили для кнопок на этой странице*/
 	display: block;
 	color: #2B3990;
 	background-color: white;
@@ -157,13 +192,12 @@ button.choice {
 }
 
 a.choice {
-	/*Убирает подчеркивание у ссылок*/
 	text-decoration: none;
 }
 
 /*Конец стилей для страницы выбора*/
 
-/*Стили для страницы входа (login.php)*/
+/*Стили для страницы входа (signin.php)*/
 
 form.login {
 	/*центрирует форму регистрации*/
@@ -177,7 +211,6 @@ input.logpass {
 	/*Стили для полей формы*/
 	margin: 7px;
 	font-size: 30px;
-	font-family: "Trebuchet MS";
 	color: #2B3990;
 	border-color: #2B3990;
 	border-radius: 8px;
@@ -189,7 +222,6 @@ input.logpassin {
 	color: #2B3990;
 	background-color: white;
 	font-size: 30px;
-	font-family: "Trebuchet MS";
 	border-color: #2B3990;
 	border-radius: 8px;
 	padding: 2px;
@@ -197,6 +229,13 @@ input.logpassin {
 	position: absolute;
 	left: 50%;
   	transform: translate(-50%);
+}
+
+p.logError {
+	text-align: center;
+	margin-top: 20%;
+	font-size: 30px;
+	color: red;
 }
 
 /*Конец стилей для страницы входа*/
@@ -215,7 +254,6 @@ input.sipass {
 	/*Стили для полей формы*/
 	margin: 7px;
 	font-size: 30px;
-	font-family: "Trebuchet MS";
 	color: #2B3990;
 	border-color: #2B3990;
 	border-radius: 8px;
@@ -229,7 +267,6 @@ input.sipassin {
 	color: #2B3990;
 	background-color: white;
 	font-size: 30px;
-	font-family: "Trebuchet MS";
 	border-color: #2B3990;
 	border-radius: 8px;
 	padding: 2px;
@@ -239,19 +276,80 @@ input.sipassin {
   	transform: translate(-50%);
 }
 
+p.regError {
+	text-align: center;
+	margin-top: 17%;
+	font-size: 30px;
+	color: red;
+}
+
 /*Конец стилей для страницы регистрации*/
 
-/*Стили для таблицы с задачами*/
 
-table.tasks {
-	font-family: "Trebuchet MS";
-	color: #2B3990;
+/* Стили для главной страницы*/
+
+div.main {
 	position: absolute;
 	left: 50%;
 	transform: translate(-50%);
+	width: 90%;
+	text-align: center;
+}
+
+form.change_date {
+	float: left;
+}
+
+form.other_tasks {
+	float: right;
+}
+
+input.other_tasks {
+	width: 32px;
+	border-color: #2B3990;
+	border-radius: 50%;
+	padding: 5px;
+	margin-top: 20px;
+	margin-bottom: 20px;
+	background-color: white;
+	color: #2B3990;
+	font-size: 15px;
+	box-shadow: 0 0 15px rgba(43,57,144,0.7);
+}
+
+input.change_date {
+	border-color: #2B3990;
+	border-radius: 10px;
+	padding: 5px;
+	margin-top: 20px;
+	margin-bottom: 20px;
+	background-color: white;
+	color: #2B3990;
+	font-size: 15px;
+	box-shadow: 0 0 15px rgba(43,57,144,0.7);
+}
+
+input[type="submit"].change_date:hover {
+	color: #FFFFFF;
+	background-color: #2B3990;
+}
+
+/* Конец стилей для главной страницы*/
+
+
+/*Стили для таблицы с задачами*/
+
+
+
+
+table.tasks {
+	margin-top: 15px;
+	color: #2B3990;
 	background-color: #FFFFFF;
 	border: 1px solid #2B3990;
 	border-radius: 8px;
+	width: 100%;
+	box-shadow: 0 0 20px rgba(43,57,144,0.7);
 }
 
 th.tasks {
@@ -260,4 +358,355 @@ th.tasks {
 	color: #FFFFFF;
 	background-color: #2B3990;
 	margin: 0;
+	box-shadow: 0 0 10px rgba(43,57,147,1);
+}
+
+th.menu {
+	width: 8%;
+}
+
+
+
+th.name {
+	width: 62%;
+}
+
+th.time {
+	width: 15%;
+}
+
+th.priority {
+	width: 15%;
+}
+
+th.datet {
+	width: 15%;
+}
+
+th.namet {
+	width: 47%;
+}
+
+td.no_tasks {
+	text-align: center;
+}
+
+td.tasks {
+	border-bottom: 2.5px dotted rgba(43,57,147, 50%);
+}
+
+input.taskmenu {
+	padding: 0;
+	color: #2B3990;
+	background-color: #96C0E6;
+	border-color: #2B3990;
+	border-radius: 50%;
+	height: 30px;
+	width: 30px;
+	font-size: 1em;
+	box-shadow: 0 0 10px rgba(150,192,230,0.7);
+}
+
+input.ready {
+	float: left;
+}
+
+
+
+
+input.taskmenu:hover {
+	padding: 0;
+	color: #FFFFFF;
+	background-color: #96C0E6;
+	border-color: #2B3990;
+	border-radius: 50%;
+	height: 30px;
+	width: 30px;
+}
+
+input.taskname {
+	border: none;
+	background-color: #FFFFFF;
+	color: #2B3990;
+	font-size: 17px;
+}
+
+input.taskname:hover {
+	border: none;
+	background-color: #FFFFFF;
+	color: #2B3990;
+	text-decoration: underline;
+}
+
+/* Стили для страницы вывода информации о задаче */
+
+/* calendar
+table.calendar    { border-left:1px solid #999; }
+tr.calendar-row  {  }
+td.calendar-day  { min-height:80px; font-size:11px; position:relative; } * html div.calendar-day { height:80px; }
+td.calendar-day:hover  { background:#eceff5; }
+td.calendar-day-np  { background:#eee; min-height:80px; } * html div.calendar-day-np { height:80px; }
+td.calendar-day-head { background:#ccc; font-weight:bold; text-align:center; width:120px; padding:5px; border-bottom:1px solid #999; border-top:1px solid #999; border-right:1px solid #999; }
+div.day-number    { background:#999; padding:5px; color:#fff; font-weight:bold; float:right; margin:-5px -5px 0 0; width:20px; text-align:center; }
+/* shared
+td.calendar-day, td.calendar-day-np { width:120px; padding:5px; border-bottom:1px solid #999; border-right:1px solid #999; }*/
+
+/* Создать новую задачу */
+
+p.createsmtnew {
+	width: 100%;
+	text-align: center;
+	color: #2B3990;
+	font-size: 25px;
+	margin-top: 15px;
+	margin-bottom: 0;
+}
+
+form.createsmtnew {
+	margin-top: 15px;
+	position: absolute;
+	left: 50%;
+	transform: translate(-50%);
+}
+
+div.priority {
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+span.priority {
+	color: #2B3990;
+	background-color: #FFFFFF;
+	font-size: 20px;
+	padding: 4px;
+	border-radius: 12px;
+	box-shadow: 0 0 10px rgba(43,57,147,1);
+}
+
+input.priority {
+	display: none;
+}
+
+input.priority:checked + span { 
+	color: #FFFFFF;
+	background-color: #2B3990;
+}
+
+p.category {
+	margin: 0;
+}
+
+p.cat {
+	font-size: 20px;
+	color: #2B3990;
+	font-weight: bold;
+}
+
+span.cat {
+	font-size: 20px;
+	color: #2B3990;
+	font-weight: bold;
+}
+
+div.category {
+	margin-left: 30px;
+}
+
+input.category {
+	display: none;
+}
+
+span.category {
+	color: #2B3990;
+	font-size: 20px;
+	background-color: #FFFFFF;
+	padding: 3px;
+	border-radius: 16px;
+	box-shadow: 0 0 10px rgba(43,57,147,1);
+}
+
+input.category:checked + span { 
+	color: #FFFFFF;
+	background-color: #2B3990;
+}
+
+input.create {
+	color: #2B3990;
+	border-radius: 12px;
+	font-size: 20px;
+	background-color: #FFFFFF;
+	box-shadow: 0 0 10px rgba(43,57,147,1);
+	margin-bottom: 7px;
+	float: right;
+}
+
+input.create:hover {
+	background-color: #2B3990;
+	color: #FFFFFF;
+	border-color: #2B3990;
+}
+
+input.name {
+	color: #2B3990;
+	width: 500px;
+	border-radius: 12px;
+	padding: 3px;
+	font-size: 20px;
+	box-shadow: 0 0 10px rgba(43,57,147,1);
+}
+
+textarea.description {
+	color: #2B3990;
+	width: 500px;
+	font-size: 15px;
+	border-radius: 12px;
+	padding: 3px;
+	box-shadow: 0 0 10px rgba(43,57,147,1);
+}
+
+input.date {
+	color: #2B3990;
+	font-size: 20px;
+	background-color: #FFFFFF;
+	box-shadow: 0 0 10px rgba(43,57,147,1);
+	border-radius: 12px;
+	padding: 3px;
+}
+
+input.time {
+	color: #2B3990;
+	font-size: 20px;
+	background-color: #FFFFFF;
+	box-shadow: 0 0 10px rgba(43,57,147,1);
+	border-radius: 12px;
+	padding: 3px;
+}
+
+div.page_name {
+	text-align: center;
+	padding-top: 20px;
+	font-size: 30px;
+	color: #2B3990;
+
+}
+
+input.active {
+	color: #FFFFFF;
+	background-color: #2B3990;
+}
+
+input.other_tasks:hover {
+	color: #FFFFFF;
+	background-color: #2B3990;
+}
+
+input.active:hover {
+	color: #2B3990;
+	background-color: #FFFFFF;
+}
+
+th.category_menu {
+	width: 5%;
+}
+
+th.category_name {
+	width: 40%;
+}
+
+th.category_description {
+	width: 50%;
+}
+
+div.main_category {
+	position: absolute;
+	margin-top: 55px;
+	left: 50%;
+	top: 40%;
+  	transform: translate(-50%, -50%);
+}
+
+input.category_name {
+	width: 300px;
+	border-color: #2B3990;
+	border-radius: 12px;
+	padding: 3px;
+	color: #2B3990;
+}
+
+textarea.category_description {
+	width: 300px;
+	height: 75px;
+	border-color: #2B3990;
+	border-radius: 12px;
+	padding: 3px;
+	color: #2B3990;
+}
+
+p.urgent_and_important {
+	color: red;
+}
+
+p.error {
+	text-align: center;
+	font-size: 30px;
+	color: red;
+}
+
+th.delete_note {
+	width: 7%;
+}
+
+th.note_name {
+	width: 72%;
+}
+
+th.note_created {
+	width: 25%;
+}
+
+p.error {
+	text-align: center;
+	font-size: 20px;
+	color: red;
+}
+
+span.label_parameter {
+	color: #2B3990;
+	font-size: 20px;
+	font-weight: bold;
+	vertical-align: top;
+}
+
+span.value_parameter {
+	background-color: white;
+	padding: 3px;
+	border-radius: 7px;
+	color: #2B3990;
+	font-size: 20px;
+}
+
+span.goal_name {
+	color: #2B3990;
+	font-size: 20px;
+}
+
+div.value_parameter {
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+div.near_cat {
+	margin-top: 10px;
+}
+
+li.categories {
+	margin-bottom: 10px;
+	list-style-type: none;
+}
+
+li.categories:before {
+	content: "⊳ ";
+	color: #2B3990;
+	font-size: 20px;
+	font-weight: bold;
 }

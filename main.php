@@ -1,134 +1,182 @@
 <?php
-	session_start();
-	if (! isset($_SESSION["login"])) {
-		$url = 'choice.php';
-		header("Location: " . $url);
+session_start();
+
+
+require 'db.php';
+require 'functions/write_html.php';
+require 'functions/php.php';
+
+
+if (empty($_SESSION['login'])) {
+	redirectToAnotherPage('index.php');
+}
+
+
+if (isset($_POST['taskname']))  {
+	$_SESSION['task_id'] = $_POST['task'];
+	$_SESSION['date'] = NULL;
+	$_SESSION['tasks'] = NULL;
+	redirectToAnotherPage('task_page.php');
+}
+
+if (isset($_POST['done'])) {
+	$task = R::findOne('tasks', '`login` = ? AND `id` = ?', array($_SESSION['login'], $_POST['task']));
+		$task->ready = 'done';
+	R::store($task);
+}
+if (isset($_POST['delete'])) {
+	$task = R::findOne('tasks', '`login` = ? AND `id` = ?', array($_SESSION['login'], $_POST['task']));
+	R::trash($task);
+}
+if (isset($_POST['freeze'])) {
+	$task = R::findOne('tasks', '`login` = ? AND `id` = ?', array($_SESSION['login'], $_POST['task']));
+	$task->ready = 'freezen';
+	R::store($task);
+}
+
+if (isset($_POST['change_date'])) {
+	$selectedDate = $_POST['selected_date'];
+	$_SESSION['date'] = $selectedDate;
+} elseif (isset($_SESSION['date'])) {
+	$selectedDate = $_SESSION['date'];
+} else {
+	$selectedDate = date('Y-m-d', time());
+}
+
+$neccesaryTasks = '';
+if (isset($_POST['time_task'])) {
+	$selectedDate = $_POST['hidden_date'];
+	$neccesaryTasks = 'with_time';
+} elseif (isset($_POST['not_time_task'])) {
+	$selectedDate = $_POST['hidden_date'];
+	$neccesaryTasks = 'without_time';
+} else {
+	if (isset($_SESSION['tasks'])) {
+		$neccesaryTasks = $_SESSION['tasks'];
+	} else {
+		$neccesaryTasks = 'with_time';
+	}
+}
+
+if ($neccesaryTasks == 'with_time') {
+	$withTimeClass = 'active';
+	$withoutTimeClass = '';
+} else {
+	$withTimeClass = '';
+	$withoutTimeClass = 'active';
+}
+
+$_SESSION['tasks'] = $neccesaryTasks;
+
+if ($neccesaryTasks == 'with_time') {
+	$tasks = R::find( 'tasks', '`login` = ? AND `start_date` = ? AND `start_time` IS NOT NULL ORDER BY `start_time`', array( $_SESSION['login'], $selectedDate ) );
+} else {
+	$tasks = R::find( 'tasks', '`login` = ? AND `start_date` = ? AND `start_time` IS NULL AND `priority` = ?', array( $_SESSION['login'], $selectedDate, 'urgent|important' ) );
+	$tasks += R::find( 'tasks', '`login` = ? AND `start_date` = ? AND `start_time` IS NULL AND `priority` = ?', array( $_SESSION['login'], $selectedDate, 'urgent|notImportant' ) );
+	$tasks += R::find( 'tasks', '`login` = ? AND `start_date` = ? AND `start_time` IS NULL AND `priority` = ?', array( $_SESSION['login'], $selectedDate, 'notUrgent|important' ) );
+	$tasks += R::find( 'tasks', '`login` = ? AND `start_date` = ? AND `start_time` IS NULL AND `priority` = ?', array( $_SESSION['login'], $selectedDate, 'notUrgent|notImportant' ) );
+}
+
+$tasksForOutput = [];
+foreach ($tasks as $task) {
+	if ($task->ready == 'done' or $task->ready == 'freezen') {
+		continue;
 	}
 
-	require "db.php";
-	require "functions/foreverypage.php";
 
-	
-	# Этот обработчик формы отвечает за нажатие по имени задачи
-	if (isset($_POST['taskname']))  {
-		$_SESSION['task'] = $_POST['task'];
-		$url = 'taskpage.php';
-		header("Location: " . $url);
-    };
-	# Этот обработчик формы отвечает за нажатие кнопки "V" (готово)
-	if (isset($_POST['V'])) {
-		$task = R::findOne('tasks', '`login` = ? AND `name` = ?', array($_SESSION['login'], $_POST['task']));
-		$task->ready = '1';
-		R::store($task);
-	};
-	# Этот обработчик формы отвечает за нажатие кнопки "D" (удалить)
-	if (isset($_POST['D'])) {
-		$task = R::findOne('tasks', '`login` = ? AND `name` = ?', array($_SESSION['login'], $_POST['task']));
-		R::trash($task);
-	};
-?>
+	if ($task->start_time) {
+		$startAndFinishTime = $task->start_time . '<br>';
+	} else {
+		$startAndFinishTime = '---<br>';
+	}
+	if ($task->finish_time) {
+		$startAndFinishTime .= $task->finish_time;
+	} else {
+		$startAndFinishTime .= '---';
+	}
 
-<!DOCTYPE html>
-<html>
-<head>
-	<meta charset="utf-8">
-	<link rel="stylesheet" type="text/css" href="style.css">
-	<title>Главная</title>
-</head>
-<body>
-	<header>
-		<nav>
-			<ul class="nav">
-				<li class="nav"><a href="/project/main.php" class="active">Главная</a></li>
-				<li class="nav"><a href="/goals.php" class="nav">Цели</a></li>
-				<li class="nav"><a href="/project/tasks.php" class="nav">Задачи</a></li>
-				<li class="nav"><a href="/notes.php" class="nav">Заметки</a></li>
-				<li class="nav"><a href="/trackers.php" class="nav">Трекеры</a></li>
-				<li class="nav"><a href="/project/categories.php" class="nav">Категории</a></li>
-				<ul class="account">
-					<li class="acc">
-						<button class="account"></button>
-						<ul class="submenuacc">
-							<li class="account"><a href="#">Настройки</a></li>
-							<li class="account"><a href="#">Помощь</a></li>
-							<li class="account"><a href="exit.php">Выход</a></li>
-						</ul>
-					</li>
-				</ul>
-			</ul>
-		</nav>
-	</header>
-	<table class="tasks">
-		<tr class="tasks">
-			<th class="tasks">Menu</th>
-			<th class="tasks">Name</th>
-            <th class="tasks">SFd</th>
-            <th class="tasks">SFt</th>
-            <th class="tasks">Priority</th>
-		</tr>
-		<?php 
-		$login = $_SESSION['login'];
-		$tasks = R::find('tasks', 'login LIKE ?', array($login)); # Получаем данные от БД
-		if (! isset($tasks)) {
-			print "<td colspan=\"5\">
+	$priority = '';
+	if ($task->priority) {
+		if ($task->priority == 'notUrgent|notImportant') {
+			$priority = 'Не срочно<br>Не важно';
 		}
-		foreach ($tasks as $c => $value) { # Выводим полученные данные в виде таблицы
-			if ($value->ready != '1') { # Выводим только те задачи, которые не отмечены, как сделанные
-				print "<tr>
-			<td>
-				<form action=\"\" method=\"POST\">
-					<p><input type=\"hidden\" name=\"task\" value=\"$value->name\">
-					<input type=\"submit\" name=\"V\" value=\"V\">
-					<input type=\"submit\" name=\"D\" value=\"D\"></p>
-				</form>
-			</td>
-			<td>
-				<form action=\"\" method=\"POST\">
-					<p><input type=\"submit\" name=\"taskname\" value=\"$value->name\"></p>
-				</form>
-			</td>
-			<td>
-				<p><?php if (isset($value->startd)) {print $value->startd;} else {print '---';}; ?><br>
-				<?php if (isset($value->finishd)) {print $value->finishd;} else {print '---';}: ?></p>
-			</td>
-			<td>
-				<p>$value->startt<br><p>$value->finisht</p>
-			</td>
-			<td>
-				<!-- Возникла проблема с преобразованием строки в массив=(
-				<?php
-				$value = $value->export();
-				print $value;
-				";//$imp = explode('|', $value['priority']);
-				//if ($imp[0] == '1' and $imp[1] == '1') {
-				//	print 'Срочно и важно';
-				//} elseif ($imp[0] == '0' and $imp[1] == '1') {
-				//	print 'Не срочно, но важно';
-				//} elseif ($imp[0] == '1' and $imp[1] == '0') {
-				//	print 'Срочно, но не важно';
-				//} else {
-				//	print 'Не срочно и не важно';
-				//};
-				print "?>-->
-			</td>
-		</tr><br>
+		if ($task->priority == 'urgent|notImportant') {
+			$priority = 'Не срочно<br>Важно';
+		}
+		if ($task->priority == 'notUrgent|important') {
+			$priority = 'Срочно<br>Не важно';
+		}
+		if ($task->priority == 'urgent|important') {
+			$priority = 'Срочно<br>Важно';
+		}
+	}
+
+
+	$taskForOutput = [ $task->id, $task->name, $startAndFinishTime, $priority];
+	array_push($tasksForOutput, $taskForOutput);
+}
+ 
+
+writeHead('Главная');
+nav('main');
+print '<div class="main">
+	';
+print "    <div class=\"change_date\">
+			<form action=\"\" method=\"POST\" class=\"change_date\">
+				<input type=\"date\" name=\"selected_date\" class=\"change_date\" value=\"$selectedDate\">
+				<input type=\"submit\" name=\"change_date\" value=\"✔\" class=\"change_date\">
+			</form>
+			<form action=\"\" method=\"POST\" class=\"other_tasks\">
+				<input type=\"hidden\" name=\"hidden_date\" value=\"$selectedDate\">
+				<input type=\"submit\" name=\"time_task\" value=\"⌚\" class=\"other_tasks $withTimeClass\">
+				<input type=\"submit\" name=\"not_time_task\" value=\"...\" class=\"other_tasks $withoutTimeClass\">
+			</form>
+		</div>
 		";
-			};
-		};
-		?>
-	</table>
-	<ul class="addul">
-		<li class="addli">
-			<ul class="submenu">
-				<li><p class="addtext">Добавить...</p></li>
-				<li><p><a href="createnewcategory.php" class="add">категорию</a></p></li>
-				<li><p><a href="#" class="add">трекер</a></p></li>
-				<li><p><a href="#" class="add">заметку</a></p></li>
-				<li><p><a href="#" class="add">цель</a></p></li>
-				<li><p><a href="createnewtask.php" class="add">задачу</a></p></li>
-			</ul>
-			<button class="addbutton"></button>
-		</li>
-	</ul>
-</body>
-</html>
+print '<table class="tasks">
+			<tr class="tasks">
+				<th class="tasks menu"></th>
+				<th class="tasks name">Наименование</th>
+            	<th class="tasks time">Время</th>
+				<th class="tasks priority">Приоритет</th>
+			</tr>
+			';
+if ($tasksForOutput) {
+	foreach ($tasksForOutput as $task) {
+		print "            <tr class=\"tasks\">
+				<td class=\"tasks\" class=\"menu\">
+					<form action=\"\" method=\"POST\">
+						<p><input type=\"hidden\" name=\"task\" value=\"$task[0]\">
+						<input type=\"submit\" name=\"done\" value=\"✔\" class=\"taskmenu\" class=\"ready\">
+						<input type=\"submit\" name=\"delete\" value=\"✘\" class=\"taskmenu\" class\"delete\">
+						<input type=\"submit\" name=\"freeze\" value=\"✱\" class=\"taskmenu\" class=\"freeze\"></p>
+					</form>
+				</td>
+				<td class=\"tasks\">
+					<form action=\"\" method=\"POST\">
+						<input type=\"hidden\" name=\"task\" value=\"$task[0]\">
+						<p><input type=\"submit\" name=\"taskname\" value=\"$task[1]\" class=\"taskname\"></p>
+					</form>
+				</td>
+				<td class=\"tasks\">
+					<p>$task[2]</p>
+				</td>
+				<td class=\"tasks\">
+					<p>$task[3]</p>
+				</td>
+			</tr>
+			";
+	}
+} else {
+	print '<tr>
+				<td colspan="4" class="no_tasks">У Вас нет задач! Отдохните =)</td>
+			</tr>
+		';
+}
+print '</table>
+	';
+print '</div>
+	';
+add();
+writeFoot();
+?>
