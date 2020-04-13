@@ -11,31 +11,31 @@ function writeHead($pageName) {
 }
 
 function nav($pageName) {
-	if ( $pageName == 'main' ) {
+	if ($pageName == 'main') {
 		$mainClass = 'active';
 		$goalsClass = 'nav';
 		$tasksClass = 'nav';
 		$notesClass = 'nav';
 		$categoriesClass = 'nav';
-	} elseif ( $pageName == 'goals' ) {
+	} elseif ($pageName == 'goals') {
 		$mainClass = 'nav';
 		$goalsClass = 'active';
 		$tasksClass = 'nav';
 		$notesClass = 'nav';
 		$categoriesClass = 'nav';
-	} elseif ( $pageName == 'tasks' ) {
+	} elseif ($pageName == 'tasks') {
 		$mainClass = 'nav';
 		$goalsClass = 'nav';
 		$tasksClass = 'active';
 		$notesClass = 'nav';
 		$categoriesClass = 'nav';
-	} elseif ( $pageName == 'notes' ) {
+	} elseif ($pageName == 'notes') {
 		$mainClass = 'nav';
 		$goalsClass = 'nav';
 		$tasksClass = 'nav';
 		$notesClass = 'active';
 		$categoriesClass = 'nav';
-	} elseif ( $pageName == 'categories' ) {
+	} elseif ($pageName == 'categories') {
 		$mainClass = 'nav';
 		$goalsClass = 'nav';
 		$tasksClass = 'nav';
@@ -65,15 +65,57 @@ function nav($pageName) {
 			</ul>
 		</nav>
 	</header>\n";
+}
+
+function getStartAndFinishDate($startDate, $finishDate) {
+	if ($startDate AND $finishDate) {
+		$startAndFinishDate = "$startDate<br>$finishDate";
+	} elseif ($startDate) {
+		$startAndFinishDate = "$startDate<br>---";
+	} elseif ($finishDate) {
+		$startAndFinishDate = "---<br>$finishDate";
+	} else {
+		$startAndFinishDate = "---<br>---";
 	}
 
-	function writeFoot() {
-		echo "</body>
+	return $startAndFinishDate;
+}
+
+function getStartAndFinishTime($startTime, $finishTime) {
+	if ($startTime AND $finishTime) {
+		$startAndFinishTime = "$startTime<br>$finishTime";
+	} elseif ($startTime) {
+		$startAndFinishTime = "$startTime<br>---";
+	} elseif ($finishTime) {
+		$startAndFinishTime = "---<br>$finishTime";
+	} else {
+		$startAndFinishTime = "---<br>---";
+	}
+
+	return $startAndFinishTime;
+}
+
+function getPriority($value_from_db) {
+	if ($value_from_db == 'urgent|important') {
+		$priority = 'Срочно<br>Важно';
+	} elseif ($value_from_db == 'notUrgent|important') {
+		$priority = 'Не срочно<br>Важно';
+	} elseif ($value_from_db == 'urgent|notImportant') {
+		$priority = 'Срочно<br>Не важно';
+	} else {
+		$priority = 'Не срочно<br>Не важно';
+	}
+	
+	return $priority;
+}
+
+function writeFoot() {
+	echo "</body>
 </html>";
-	}
+}
 
-	function add() {
-		echo "\t<ul class=\"addul\">
+function add() {
+	echo "\t<ul class=\"addul\">
 		<li class=\"addli\">
 			<ul class=\"submenu\">
 				<li class=\"addli\"><p class=\"addtext\">Добавить...</p></li>
@@ -86,9 +128,9 @@ function nav($pageName) {
 			<button class=\"addbutton\">+</button>
 		</li>
 	</ul>\n";
-	}
+}
 
-	function draw_calendar($month,$year){
+function draw_calendar($month,$year){
  
 		/* Начало таблицы */
 		$calendar = '<table cellpadding="0" cellspacing="0" class="calendar">';

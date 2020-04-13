@@ -1,17 +1,17 @@
 <?php
-	session_start();
+session_start();
 
-	require "db.php";
-	require "functions/write_html.php";
-	require "functions/php.php";
+require "db.php";
+require "functions/write_html.php";
+require "functions/php.php";
 
-	if ( isset( $_SESSION["login"] ) ) {
-		redirectToAnotherPage('main.php');
-	}
+if ( isset($_SESSION["login"])) {
+	redirectToAnotherPage('main.php');
+}
 
-	$pageName = 'Войти/Зарегистрироваться';
-	writeHead($pageName);
-	print "    <div class=\"choice\">
+$pageName = 'Войти/Зарегистрироваться';
+writeHead($pageName);
+print "    <div class=\"choice\">
 		<p>
 			<button class=\"choice\">
 				<a href=\"singin.php\" class=\"choice\">Вход</a>

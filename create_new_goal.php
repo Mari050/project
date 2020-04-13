@@ -94,29 +94,32 @@ $categories = R::find('categories', 'login LIKE ?', array($_SESSION['login']));
 writeHead('Новая цель');
 nav('goals');
 if ($error) {
-    print "<p class=\"error\">$error</p>";
+    print "\t<p class=\"error\">$error</p>\n";
 }
-print "<div class=\"main_category\">
-        <form action=\"\" method=\"POST\">
-            <div>
+print "\t<div class=\"main_category\"\n>";
+print "\t\t<form action=\"\" method=\"POST\">\n";
+print "\t\t\t<div>
                 <p>
                     <input type=\"submit\" name=\"new_goal\" value=\"Создать\" class=\"createsmtnew create\">
                 </p>
-            </div>
-            <div>
+            </div>\n";
+print "\t\t\t<div>
                 <p>
                     <input type=\"text\" name=\"name\" placeholder=\"Наименование цели\" class=\"createsmtnew name\">
                 </p>
                 <p>
                     <textarea name=\"description\" placeholder=\"Описание цели\" class=\"createsmtnew description\">$description</textarea>
                 </p>
-            </div>
-            <div>
+            </div>\n";
+print "\t\t\t<div>
                 <p>
-                    <input type=\"date\" name=\"finish_date\" class=\"createsmtnew date\" value=\"$finishDate\">
+                    <label>
+                        <span class=\"label_parameter\">Дата завершения: </span>
+                        <input type=\"date\" name=\"finish_date\" class=\"createsmtnew date\" value=\"$finishDate\">
+                    </label>
                 </p>
-            </div>
-            <div class=\"priority\">
+            </div>\n";
+print "\t\t\t<div class=\"priority\">
                 <p>
                     <label class=\"priority\">
                         <input type=\"checkbox\" name=\"priority[]\" value=\"0\" class=\"createsmtnew priority\" $urgent>
@@ -127,23 +130,20 @@ print "<div class=\"main_category\">
                         <span class=\"priority\">Важно</span>
                     </label>
                 </p>
-            </div>
-            <div>
-                <p class=\"cat\">Категории:</p>
-            ";
+            </div>\n";
+print "\t\t\t<div>
+                <p class=\"cat\">Категории:</p>\n";
 foreach ($categories as $category) {
-    print "    <div class=\"category\">
+    print "\t<div class=\"category\">
                     <label class=\"category\">
                         <input type=\"checkbox\" name=\"category[]\" value=\"$category->id\" class=\"createsmtnew category\">
                         <span class=\"category\">$category->name</span>
                     </label>
                 </div>
-                <br>
-	        ";
+                <br>\n";
 }        
-print '</div>
+print "\t\t\t</div>
         </form>
-    </div>
-';
+    </div>\n";
 writeFoot();
 ?>

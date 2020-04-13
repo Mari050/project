@@ -24,7 +24,7 @@ if (isset($_POST['newnote'])) {
         }
         $note->value = $_POST['value'];
         $note->date = date('Y-m-d', time());
-        $note->time = date('G:i');
+        $note->time = date('H:i');
         R::store($note);
         redirectToAnotherPage('notes.php');
     } else {
@@ -40,7 +40,7 @@ print '<div class="main_category">
             <form action="" method="POST">
                 <input type="submit" name="newnote" value="Создать" class="create"><br>
                 <input type="text" name="name" placeholder="Название" class="category_name"><br>
-                <textarea name="value" placeholder="Описание" class="category_description"></textarea>
+                <textarea name="value" placeholder="..." class="category_description"></textarea>
             </form>
         </div>';
 writeFoot();

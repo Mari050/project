@@ -83,34 +83,9 @@ foreach ($tasks as $task) {
 		continue;
 	}
 
-
-	if ($task->start_time) {
-		$startAndFinishTime = $task->start_time . '<br>';
-	} else {
-		$startAndFinishTime = '---<br>';
-	}
-	if ($task->finish_time) {
-		$startAndFinishTime .= $task->finish_time;
-	} else {
-		$startAndFinishTime .= '---';
-	}
-
-	$priority = '';
-	if ($task->priority) {
-		if ($task->priority == 'notUrgent|notImportant') {
-			$priority = 'Не срочно<br>Не важно';
-		}
-		if ($task->priority == 'urgent|notImportant') {
-			$priority = 'Не срочно<br>Важно';
-		}
-		if ($task->priority == 'notUrgent|important') {
-			$priority = 'Срочно<br>Не важно';
-		}
-		if ($task->priority == 'urgent|important') {
-			$priority = 'Срочно<br>Важно';
-		}
-	}
-
+	$startAndFinishTime = getStartAndFinishTime($task->start_time, $task->finish_time);
+	
+	$priority = getpriority($task->priority);
 
 	$taskForOutput = [ $task->id, $task->name, $startAndFinishTime, $priority];
 	array_push($tasksForOutput, $taskForOutput);

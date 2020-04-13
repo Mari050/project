@@ -293,7 +293,6 @@ div.main {
 	left: 50%;
 	transform: translate(-50%);
 	width: 90%;
-	text-align: center;
 }
 
 form.change_date {
@@ -500,6 +499,7 @@ p.cat {
 	font-size: 20px;
 	color: #2B3990;
 	font-weight: bold;
+	text-decoration: underline;
 }
 
 span.cat {
@@ -562,6 +562,7 @@ textarea.description {
 	border-radius: 12px;
 	padding: 3px;
 	box-shadow: 0 0 10px rgba(43,57,147,1);
+	background-color: #FFFFFF;
 }
 
 input.date {
@@ -675,6 +676,7 @@ span.label_parameter {
 	font-size: 20px;
 	font-weight: bold;
 	vertical-align: top;
+	margin-right: 5px;
 }
 
 span.value_parameter {
@@ -709,4 +711,64 @@ li.categories:before {
 	color: #2B3990;
 	font-size: 20px;
 	font-weight: bold;
+}
+
+div.task_page {
+	width: 500px;
+	margin-top: 15px;
+}
+
+input.create_comment {
+	float: right;
+	padding: 0;
+	color: #2B3990;
+	background-color: #96C0E6;
+	border-color: #2B3990;
+	border-radius: 50%;
+	height: 30px;
+	width: 30px;
+	font-size: 1em;
+	box-shadow: 0 0 10px rgba(150,192,230,0.7);
+	margin-bottom: 3px;
+}
+
+input.create_comment:hover {
+	color: #FFFFFF;
+}
+
+span.comment {
+	font-size: 17px;
+	color: #2B3990;
+	font-weight: bold;
+}
+
+div.comment {
+	margin-top: 5px;
+}
+
+textarea.comment {
+	background-color: rgb(228, 237, 255);
+}
+
+input.add {
+	float: right;
+	font-weight: bold;
+	font-size: 20px;
+}
+
+label.add {
+	float: right;
+}
+
+span.repeat {
+	border-radius: 8px;
+	background-color: #FFFFFF;
+	color: #2B3990;
+	font-size: 20px;
+	padding: 3px;
+}
+
+input.repeat:checked + span { 
+	color: #FFFFFF;
+	background-color: #2B3990;
 }

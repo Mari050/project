@@ -121,44 +121,10 @@ if ($selectedDate != '*') {
 
 $tasksForOutput = [];
 foreach ($tasks as $task) {
-	if ($task->start_date) {
-		$startAndFinishDate = $task->start_date . '<br>';
-	} else {
-		$startAndFinishDate = '---<br>';
-	}
-	if ($task->finish_date) {
-		$startAndFinishDate .= $task->finish_date;
-	} else {
-		$startAndFinishDate .= '---';
-	}
+	$startAndFinishDate = getStartAndFinishDate($task->start_date, $task->finish_date);
+	$startAndFinishTime = getStartAndFinishTime($task->start_time, $task->finish_time);
 
-	if ($task->start_time) {
-		$startAndFinishTime = $task->start_time . '<br>';
-	} else {
-		$startAndFinishTime = '---<br>';
-	}
-	if ($task->finish_time) {
-		$startAndFinishTime .= $task->finish_time;
-	} else {
-		$startAndFinishTime .= '---';
-	}
-
-	$priority = '';
-	if ($task->priority) {
-		if ($task->priority == 'notUrgent|notImportant') {
-			$priority = 'Не срочно<br>Не важно';
-		}
-		if ($task->priority == 'urgent|notImportant') {
-			$priority = 'Не срочно<br>Важно';
-		}
-		if ($task->priority == 'notUrgent|important') {
-			$priority = 'Срочно<br>Не важно';
-		}
-		if ($task->priority == 'urgent|important') {
-			$priority = 'Срочно<br>Важно';
-		}
-	}
-
+	$priority = getPriority($task->priority);
 
 	$taskForOutput = [ $task->id, $task->name, $startAndFinishDate, $startAndFinishTime, $priority];
 	array_push($tasksForOutput, $taskForOutput);

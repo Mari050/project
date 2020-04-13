@@ -1,5 +1,5 @@
 <?php
-    function redirectToAnotherPage($pageAddres) {
-        header("Location: " . $pageAddres);
-    }
+function redirectToAnotherPage($pageAddres) {
+	header("Location: " . $pageAddres);
+}
 ?>
